@@ -14,10 +14,12 @@ const ImageGrid = ({ folderId, token, reloadFlag }) => {
   const handleSearch = async () => {
     try {
       const results = await searchImages(folderId, searchTerm, token);
-      if (results?.length === 0) {
+      if (!Array.isArray(results) || results.length === 0) {
         toast.info("No images found for this search.");
+        setImages([]);
+      } else {
+        setImages(results);
       }
-      setImages(results);
     } catch (error) {
       toast.error("Search failed");
     }
@@ -27,9 +29,10 @@ const ImageGrid = ({ folderId, token, reloadFlag }) => {
     const fetchImages = async () => {
       try {
         const imgs = await getImagesByFolder(folderId, token);
-        setImages(imgs);
+        setImages(Array.isArray(imgs) ? imgs : []);
       } catch (error) {
         toast.error("Failed to load images");
+        setImages([]); // fallback to prevent crash
       }
     };
 
@@ -37,10 +40,18 @@ const ImageGrid = ({ folderId, token, reloadFlag }) => {
   }, [folderId, reloadFlag]);
 
   useEffect(() => {
+    const fetchAllImages = async () => {
+      try {
+        const imgs = await getImagesByFolder(folderId, token);
+        setImages(Array.isArray(imgs) ? imgs : []);
+      } catch {
+        toast.error("Failed to reload images");
+        setImages([]);
+      }
+    };
+
     if (searchTerm === "") {
-      getImagesByFolder(folderId, token)
-        .then(setImages)
-        .catch(() => toast.error("Failed to reload images"));
+      fetchAllImages();
     }
   }, [searchTerm]);
 
@@ -49,7 +60,7 @@ const ImageGrid = ({ folderId, token, reloadFlag }) => {
 
     try {
       await deleteImageById(id, token);
-      setImages(images.filter((img) => img._id !== id));
+      setImages((prev) => prev.filter((img) => img._id !== id));
       toast.success("Image deleted");
     } catch (err) {
       toast.error("Failed to delete image");
@@ -58,7 +69,7 @@ const ImageGrid = ({ folderId, token, reloadFlag }) => {
 
   return (
     <div className="p-4 max-w-7xl mx-auto">
-      <div className="mb-6 w-100 flex items-center gap-2">
+      <div className="mb-6 w-full flex items-center gap-2">
         <input
           type="text"
           placeholder="Search your images by name..."
@@ -75,7 +86,7 @@ const ImageGrid = ({ folderId, token, reloadFlag }) => {
         </button>
       </div>
 
-      {images?.length === 0 ? (
+      {!Array.isArray(images) || images.length === 0 ? (
         <p className="text-center text-gray-500 mt-20 text-lg">
           No images to display
         </p>
