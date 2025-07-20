@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "../api/axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import API from "../api/axios";
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
@@ -12,7 +13,7 @@ export default function Dashboard() {
 
   const fetchFolders = async () => {
     try {
-      const res = await axios.get(
+      const res = await API.get(
         folderId ? `/folder/my-folders/${folderId}` : `/folder/my-folders`
       );
       setFolders(res?.data?.folders ?? []);
@@ -32,7 +33,7 @@ export default function Dashboard() {
     if (!newFolderName.trim()) return;
 
     try {
-      await axios.post("/folder/create", {
+      await API.post("/folder/create", {
         name: newFolderName,
         parentId: folderId || null,
       });

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import FolderList from "../components/FolderList";
 import ImageUpload from "../components/ImageUpload";
 import ImageGrid from "../components/ImageGrid";
+import API from "../api/axios";
 
 export default function Drive() {
   const { folderId } = useParams();
@@ -13,7 +13,7 @@ export default function Drive() {
 
   const fetchFolders = async () => {
     try {
-      const res = await axios.get("/api/folder/my-folders", {
+      const res = await API.get("/api/folder/my-folders", {
         params: { parent: folderId || null },
         headers: { Authorization: `Bearer ${token}` },
       });
