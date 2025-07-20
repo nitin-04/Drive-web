@@ -15,7 +15,7 @@ export default function Dashboard() {
       const res = await axios.get(
         folderId ? `/folder/my-folders/${folderId}` : `/folder/my-folders`
       );
-      setFolders(res.data.folders);
+      setFolders(res.data.folders || []);
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to load folders");
     }
