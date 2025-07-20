@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:2000/api",
+  baseURL:
+    import.meta.env.MODE === "development"
+      ? "http://localhost:2000/api" // local dev
+      : "https://drive-backendd.vercel.app/api", // production
   withCredentials: true,
 });
 

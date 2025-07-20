@@ -10,11 +10,12 @@ export default function FolderList({ folders }) {
   const navigate = useNavigate();
 
   const handleCreate = async () => {
-    if (!newFolderName.trim()) return;
+    const name = newFolderName.trim();
+    if (!name) return;
 
     try {
       await API.post("/folder/create", {
-        name: newFolderName,
+        name,
         parent: folderId || null,
       });
 
@@ -23,7 +24,7 @@ export default function FolderList({ folders }) {
       window.location.reload();
     } catch (err) {
       toast.error("Folder creation failed");
-      console.error(err);
+      console.error("Folder creation error:", err);
     }
   };
 
@@ -38,7 +39,7 @@ export default function FolderList({ folders }) {
         </button>
       )}
 
-      <div className="mt-6 flex items-center gap-2 w-5">
+      <div className="mt-6 flex items-center gap-2 w-full max-w-md">
         <input
           value={newFolderName}
           onChange={(e) => setNewFolderName(e.target.value)}
@@ -54,7 +55,7 @@ export default function FolderList({ folders }) {
         </button>
       </div>
 
-      <div className="space-y-2 w-80 mt-6">
+      <div className="space-y-2 w-full max-w-md mt-6">
         {Array.isArray(folders) ? (
           folders.length === 0 ? (
             <p className="text-gray-500">No folders found.</p>
