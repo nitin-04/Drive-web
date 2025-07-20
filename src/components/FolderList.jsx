@@ -60,9 +60,9 @@ export default function FolderList({ folders }) {
       </div>
 
       <div className="space-y-2 w-80 mt-6">
-        {folders?.length === 0 ? (
+        {Array.isArray(folders) && folders.length === 0 ? (
           <p className="text-gray-500">No folders found.</p>
-        ) : (
+        ) : Array.isArray(folders) ? (
           folders.map((folder) => (
             <div
               key={folder._id}
@@ -73,6 +73,8 @@ export default function FolderList({ folders }) {
               {folder.name}
             </div>
           ))
+        ) : (
+          <p className="text-red-500">Error: folders not loaded.</p>
         )}
       </div>
     </div>
