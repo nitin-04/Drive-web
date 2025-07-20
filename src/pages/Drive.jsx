@@ -8,8 +8,8 @@ import ImageGrid from "../components/ImageGrid";
 export default function Drive() {
   const { folderId } = useParams();
   const [folders, setFolders] = useState([]);
-  const token = localStorage.getItem("token");
   const [reloadFlag, setReloadFlag] = useState(false);
+  const token = localStorage.getItem("token");
 
   const fetchFolders = async () => {
     try {
@@ -17,10 +17,13 @@ export default function Drive() {
         params: { parent: folderId || null },
         headers: { Authorization: `Bearer ${token}` },
       });
-      setFolders(res.data.folders);
+
+      const foldersData = res?.data?.folders;
+
+      setFolders(Array.isArray(foldersData) ? foldersData : []);
     } catch (err) {
       console.error("Failed to fetch folders", err);
-      setFolders([]);
+      setFolders([]); // fallback to prevent undefined errors
     }
   };
 
