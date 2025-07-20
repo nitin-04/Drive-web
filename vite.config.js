@@ -8,7 +8,9 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:2000", // your backend server
+        // target: "http://localhost:2000",
+        target: "https://drive-backendd.vercel.app/",
+
         changeOrigin: true,
         secure: false,
       },

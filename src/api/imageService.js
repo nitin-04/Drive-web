@@ -22,7 +22,7 @@ export const searchImages = async (folderId, query, token) => {
 
 export const deleteImageById = async (imageId, token) => {
   const res = await axios.delete(
-    `http://localhost:2000/api/images/${imageId}`,
+    `https://drive-backendd.vercel.app/api/images/${imageId}`,
     {
       headers: { Authorization: `Bearer ${token}` },
     }

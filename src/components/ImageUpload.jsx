@@ -34,7 +34,7 @@ const ImageUpload = ({ folderId, authToken, onUploadSuccess }) => {
     try {
       setUploading(true);
       const res = await axios.post(
-        "http://localhost:2000/api/upload",
+        "https://drive-backendd.vercel.app/api/upload",
         formData,
         {
           headers: {

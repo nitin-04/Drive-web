@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import FolderList from "../components/FolderList";
 import ImageUpload from "../components/ImageUpload";
-import ImageGrid from "../components/ImageGrid"; // ✅ Import your ImageGrid component
+import ImageGrid from "../components/ImageGrid";
 
 export default function Drive() {
   const { folderId } = useParams();
