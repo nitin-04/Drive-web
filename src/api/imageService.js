@@ -17,7 +17,7 @@ export const searchImages = async (folderId, query, token) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  return res.data.images;
+  return res.data.images || [];
 };
 
 export const deleteImageById = async (imageId, token) => {
@@ -27,5 +27,5 @@ export const deleteImageById = async (imageId, token) => {
       headers: { Authorization: `Bearer ${token}` },
     }
   );
-  return res.data;
+  return res.data || [];
 };

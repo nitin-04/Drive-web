@@ -61,7 +61,7 @@ export default function FolderList({ folders }) {
 
       <div className="space-y-2 w-80 mt-6">
         {Array.isArray(folders) ? (
-          folders.length === 0 ? (
+          folders?.length === 0 ? (
             <p className="text-gray-500">No folders found.</p>
           ) : (
             folders.map((folder) => (

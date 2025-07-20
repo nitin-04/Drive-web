@@ -15,7 +15,7 @@ export default function Dashboard() {
       const res = await axios.get(
         folderId ? `/folder/my-folders/${folderId}` : `/folder/my-folders`
       );
-      setFolders(res.data.folders || []);
+      setFolders(res?.data?.folders ?? []);
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to load folders");
     }
@@ -83,26 +83,27 @@ export default function Dashboard() {
           </button>
         </form>
 
-        {folders?.length === 0 ? (
+        {Array.isArray(folders) && folders?.length === 0 ? (
           <p className="text-gray-500 text-center">No folders found yet.</p>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-            {folders.map((folder) => (
-              <div
-                key={folder._id}
-                className="bg-blue-50 border border-blue-200 p-4 rounded-xl shadow-sm hover:cursor-pointer hover:bg-blue-100"
-                onClick={() =>
-                  navigate(`/dashboard/folder/my-folders/${folder._id}`)
-                }
-              >
-                <h2 className="text-xl font-semibold text-blue-600">
-                  📁 {folder.name}
-                </h2>
-                <p className="text-sm text-gray-500">
-                  Created: {new Date(folder.createdAt).toLocaleDateString()}
-                </p>
-              </div>
-            ))}
+            {Array.isArray(folders) &&
+              folders.map((folder) => (
+                <div
+                  key={folder._id}
+                  className="bg-blue-50 border border-blue-200 p-4 rounded-xl shadow-sm hover:cursor-pointer hover:bg-blue-100"
+                  onClick={() =>
+                    navigate(`/dashboard/folder/my-folders/${folder._id}`)
+                  }
+                >
+                  <h2 className="text-xl font-semibold text-blue-600">
+                    📁 {folder.name}
+                  </h2>
+                  <p className="text-sm text-gray-500">
+                    Created: {new Date(folder.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+              ))}
           </div>
         )}
       </div>
