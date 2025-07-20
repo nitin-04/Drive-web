@@ -1,7 +1,7 @@
-import axios from "axios";
+import API from "./axios";
 
 export const getImagesByFolder = async (folderId, token) => {
-  const res = await axios.get(`/api/images/${folderId}`, {
+  const res = await API.get(`/images/${folderId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -12,7 +12,7 @@ export const getImagesByFolder = async (folderId, token) => {
 };
 
 export const searchImages = async (folderId, query, token) => {
-  const res = await axios.get(`/api/images/${folderId}/search?query=${query}`, {
+  const res = await API.get(`/images/${folderId}/search?query=${query}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -21,11 +21,8 @@ export const searchImages = async (folderId, query, token) => {
 };
 
 export const deleteImageById = async (imageId, token) => {
-  const res = await axios.delete(
-    `https://drive-backendd.vercel.app/api/images/${imageId}`,
-    {
-      headers: { Authorization: `Bearer ${token}` },
-    }
-  );
+  const res = await API.delete(`/images/${imageId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
   return res.data || [];
 };

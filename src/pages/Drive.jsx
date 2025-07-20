@@ -13,7 +13,7 @@ export default function Drive() {
 
   const fetchFolders = async () => {
     try {
-      const res = await API.get("/api/folder/my-folders", {
+      const res = await API.get("/folder/my-folders", {
         params: { parent: folderId || null },
         headers: { Authorization: `Bearer ${token}` },
       });
