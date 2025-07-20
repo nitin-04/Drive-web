@@ -4,7 +4,7 @@ const API = axios.create({
   baseURL:
     import.meta.env.MODE === "development"
       ? "http://localhost:2000/api" // local dev
-      : "https://drive-backendd.vercel.app", // production
+      : "https://drive-backendd.vercel.app/api", // production
   withCredentials: true,
 });
 
