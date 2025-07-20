@@ -60,19 +60,21 @@ export default function FolderList({ folders }) {
       </div>
 
       <div className="space-y-2 w-80 mt-6">
-        {Array.isArray(folders) && folders.length === 0 ? (
-          <p className="text-gray-500">No folders found.</p>
-        ) : Array.isArray(folders) ? (
-          folders.map((folder) => (
-            <div
-              key={folder._id}
-              onClick={() => navigate(`/dashboard/folder/${folder._id}`)}
-              className="flex items-center gap-2 bg-gray-300 p-3 rounded-lg hover:bg-blue-200 hover:text-blue-700 cursor-pointer transition"
-            >
-              <Folder className="text-yellow-500" size={20} />
-              {folder.name}
-            </div>
-          ))
+        {Array.isArray(folders) ? (
+          folders.length === 0 ? (
+            <p className="text-gray-500">No folders found.</p>
+          ) : (
+            folders.map((folder) => (
+              <div
+                key={folder._id}
+                onClick={() => navigate(`/dashboard/folder/${folder._id}`)}
+                className="flex items-center gap-2 bg-gray-300 p-3 rounded-lg hover:bg-blue-200 hover:text-blue-700 cursor-pointer transition"
+              >
+                <Folder className="text-yellow-500" size={20} />
+                {folder.name}
+              </div>
+            ))
+          )
         ) : (
           <p className="text-red-500">Error: folders not loaded.</p>
         )}
