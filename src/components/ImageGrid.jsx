@@ -14,7 +14,7 @@ const ImageGrid = ({ folderId, token, reloadFlag }) => {
   const handleSearch = async () => {
     try {
       const results = await searchImages(folderId, searchTerm, token);
-      if (results.length === 0) {
+      if (results?.length === 0) {
         toast.info("No images found for this search.");
       }
       setImages(results);
@@ -75,7 +75,7 @@ const ImageGrid = ({ folderId, token, reloadFlag }) => {
         </button>
       </div>
 
-      {images.length === 0 ? (
+      {images?.length === 0 ? (
         <p className="text-center text-gray-500 mt-20 text-lg">
           No images to display
         </p>

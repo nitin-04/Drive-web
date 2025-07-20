@@ -83,7 +83,7 @@ export default function Dashboard() {
           </button>
         </form>
 
-        {folders.length === 0 ? (
+        {folders?.length === 0 ? (
           <p className="text-gray-500 text-center">No folders found yet.</p>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
