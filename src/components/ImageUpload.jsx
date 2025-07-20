@@ -1,10 +1,10 @@
 import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { UploadCloud, Loader2 } from "lucide-react";
+import API from "../api/axios"; // ✅ Import centralized Axios instance
 
-const ImageUpload = ({ folderId, authToken, onUploadSuccess }) => {
+const ImageUpload = ({ folderId, onUploadSuccess }) => {
   const [uploading, setUploading] = useState(false);
   const [preview, setPreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -33,16 +33,11 @@ const ImageUpload = ({ folderId, authToken, onUploadSuccess }) => {
 
     try {
       setUploading(true);
-      const res = await axios.post(
-        "https://drive-backendd.vercel.app/api/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      );
+      const res = await API.post("/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       toast.success("Image uploaded!");
       setSelectedFile(null);

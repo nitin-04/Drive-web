@@ -1,34 +1,29 @@
 import { useState } from "react";
-import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FolderPlus, Folder } from "lucide-react";
+import API from "../api/axios";
 
 export default function FolderList({ folders }) {
   const [newFolderName, setNewFolderName] = useState("");
   const { folderId } = useParams();
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
 
   const handleCreate = async () => {
     if (!newFolderName.trim()) return;
 
     try {
-      await axios.post(
-        "/api/folder/create",
-        {
-          name: newFolderName,
-          parent: folderId || null,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await API.post("/folder/create", {
+        name: newFolderName,
+        parent: folderId || null,
+      });
+
       toast.success("Folder created!");
       setNewFolderName("");
       window.location.reload();
     } catch (err) {
       toast.error("Folder creation failed");
+      console.error(err);
     }
   };
 
@@ -61,7 +56,7 @@ export default function FolderList({ folders }) {
 
       <div className="space-y-2 w-80 mt-6">
         {Array.isArray(folders) ? (
-          folders?.length === 0 ? (
+          folders.length === 0 ? (
             <p className="text-gray-500">No folders found.</p>
           ) : (
             folders.map((folder) => (
