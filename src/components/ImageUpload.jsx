@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
 import { UploadCloud, Loader2 } from "lucide-react";
-import API from "../api/axios"; // ✅ Import centralized Axios instance
+import API from "../api/axios";
 
 const ImageUpload = ({ folderId, onUploadSuccess }) => {
   const [uploading, setUploading] = useState(false);

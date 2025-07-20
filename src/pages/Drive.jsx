@@ -23,7 +23,7 @@ export default function Drive() {
       setFolders(Array.isArray(foldersData) ? foldersData : []);
     } catch (err) {
       console.error("Failed to fetch folders", err);
-      setFolders([]); // fallback to prevent undefined errors
+      setFolders([]);
     }
   };
 
