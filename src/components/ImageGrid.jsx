@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Trash, Search } from "lucide-react";
+import { Trash, Search, ImageOff } from "lucide-react";
 import {
   deleteImageById,
   getImagesByFolder,
@@ -32,7 +32,7 @@ const ImageGrid = ({ folderId, token, reloadFlag }) => {
         setImages(Array.isArray(imgs) ? imgs : []);
       } catch (error) {
         toast.error("Failed to load images");
-        setImages([]); // fallback to prevent crash
+        setImages([]);
       }
     };
 
@@ -68,18 +68,18 @@ const ImageGrid = ({ folderId, token, reloadFlag }) => {
   };
 
   return (
-    <div className="p-4 max-w-7xl mx-auto">
-      <div className="mb-6 w-full flex items-center gap-2">
+    <div className="p-6 max-w-7xl mx-auto">
+      <div className="mb-6 flex items-center gap-3">
         <input
           type="text"
-          placeholder="Search your images by name..."
+          placeholder="Search images by name..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="border border-gray-300 rounded-md px-4 py-2 w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
         />
         <button
           onClick={handleSearch}
-          className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white px-4 py-2 rounded-md hover:from-blue-600 hover:to-blue-800 transition"
+          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
         >
           <Search className="w-4 h-4" />
           Search
@@ -87,9 +87,10 @@ const ImageGrid = ({ folderId, token, reloadFlag }) => {
       </div>
 
       {!Array.isArray(images) || images.length === 0 ? (
-        <p className="text-center text-gray-500 mt-20 text-lg">
+        <div className="text-center text-gray-500 mt-20 text-lg flex flex-col items-center gap-2">
+          <ImageOff size={32} />
           No images to display
-        </p>
+        </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {images.map((img) => (
@@ -110,7 +111,7 @@ const ImageGrid = ({ folderId, token, reloadFlag }) => {
                   <Trash className="w-5 h-5" />
                 </button>
               </div>
-              <p className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-sm text-center py-1">
+              <p className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-sm text-center py-1 truncate">
                 {img.imageName}
               </p>
             </div>

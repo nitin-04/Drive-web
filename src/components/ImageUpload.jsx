@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
-import { UploadCloud, Loader2 } from "lucide-react";
+import { UploadCloud, Loader2, Image as ImageIcon } from "lucide-react";
 import API from "../api/axios";
 
 const ImageUpload = ({ folderId, onUploadSuccess }) => {
@@ -18,9 +18,7 @@ const ImageUpload = ({ folderId, onUploadSuccess }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     multiple: false,
-    accept: {
-      "image/*": [],
-    },
+    accept: { "image/*": [] },
   });
 
   const handleUpload = async () => {
@@ -52,21 +50,22 @@ const ImageUpload = ({ folderId, onUploadSuccess }) => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow mb-6 max-w-2xl mx-auto">
+    <div className="bg-white p-6 rounded-xl shadow max-w-2xl mx-auto mt-10">
       <div
         {...getRootProps()}
-        className={`border-2 border-dashed p-8 rounded-lg text-center transition ${
+        className={`border-2 border-dashed p-8 rounded-lg text-center cursor-pointer transition ${
           isDragActive ? "border-green-500 bg-green-50" : "border-gray-300"
         }`}
       >
         <input {...getInputProps()} />
-        <p className="text-gray-600 mb-2">
-          {isDragActive ? "Drop the image here..." : "Drag & Drop files here"}
+        <p className="text-gray-600 mb-3">
+          {isDragActive ? "Drop the image here..." : "Drag & drop or browse"}
         </p>
         <button
           type="button"
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm"
         >
+          <ImageIcon className="inline mr-1" size={16} />
           Browse Files
         </button>
       </div>
@@ -82,7 +81,7 @@ const ImageUpload = ({ folderId, onUploadSuccess }) => {
             {!uploading ? (
               <button
                 onClick={handleUpload}
-                className="inline-flex items-center gap-2 bg-green-600 text-white px-4 py-1.5 rounded-lg hover:bg-green-700"
+                className="inline-flex items-center gap-2 bg-green-600 text-white px-4 py-1.5 rounded-lg hover:bg-green-700 transition"
               >
                 <UploadCloud size={18} />
                 Upload
